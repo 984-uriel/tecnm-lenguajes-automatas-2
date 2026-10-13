@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Sesión 02: Taller de Compilación con GCC y Control con Git | Lenguajes y Autómatas II</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/dracula.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/monokai.css">
+  <style>
+    .reveal pre { box-shadow: none; font-size: 0.55em; width: 100%; }
+    .box { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 8px; margin: 10px 0; }
+    .badge { background: #bd93f9; color: #282a36; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8em; }
+    .accent { color: #50fa7b; font-weight: bold; }
+    .warn { color: #ff5555; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: Portada -->
+      <section>
+        <p class="badge">Lenguajes y Autómatas II (SCD-1016)</p>
+        <h2>Sesión 02</h2>
+        <h3>El Taller del Artesano: Compilación con GCC y Git</h3>
+        <p><small>Prof. Iván José Márquez Larios &bull; TecNM Campus Cancún</small></p>
+      </section>
+
+      <!-- SLIDE 2: Código Fuente vs Binario -->
+      <section>
+        <h3>¿Qué hace un Compilador?</h3>
+        <div class="box">
+          <p>Un compilador traduce representaciones textuales de alto nivel a secuencias de instrucciones binarias entendibles por la CPU.</p>
+        </div>
+        <p><code>token_scanner.c</code> (Texto ASCII) &rarr; <strong class="accent">gcc</strong> &rarr; <code>token_scanner</code> (Binario ELF x86-64)</p>
+      </section>
+
+      <!-- SLIDE 3: Compilación Rigurosa en C -->
+      <section>
+        <h3>Compilación Rigurosa con GCC</h3>
+        <p>En ingeniería de compiladores no aceptamos advertencias (*warnings*):</p>
+        <pre><code class="bash">
+# Compilar con todas las advertencias activadas
+gcc -Wall -Wextra token_scanner.c -o token_scanner
+
+# Ejecutar el binario generado
+./token_scanner
+        </code></pre>
+        <ul>
+          <li><code>-Wall</code>: Activa advertencias sobre construcciones ambiguas.</li>
+          <li><code>-Wextra</code>: Agrega comprobaciones estrictas de tipos y variables no usadas.</li>
+          <li><code>-o</code>: Especifica el nombre del archivo de salida.</li>
+        </ul>
+      </section>
+
+      <!-- SLIDE 4: La Regla de Oro en Repositorios de C -->
+      <section>
+        <h3>¿Qué se sube a Git y qué NO?</h3>
+        <div class="box" style="border-left: 5px solid #ff5555;">
+          <p class="warn">NUNCA subas archivos binarios o ejecutables a GitHub.</p>
+        </div>
+        <ul>
+          <li><span class="accent">&check; SÍ se sube:</span> <code>.c</code>, <code>.h</code>, <code>Makefile</code>, <code>.gitignore</code>, <code>README.md</code>.</li>
+          <li><span class="warn">&cross; NO se sube:</span> <code>*.o</code>, <code>*.out</code>, ejecutables sin extensión, archivos temporales.</li>
+        </ul>
+      </section>
+
+      <!-- SLIDE 5: El Guardián: .gitignore -->
+      <section>
+        <h3>El Archivo <code>.gitignore</code></h3>
+        <p>Le indica a Git qué archivos debe ignorar por completo:</p>
+        <pre><code class="bash">
+# Crear o agregar el binario a la lista de exclusión
+echo "token_scanner" >> .gitignore
+
+# Comprobar que git ya no intenta rastrear el ejecutable
+git status
+        </code></pre>
+      </section>
+
+      <!-- SLIDE 6: El Ciclo Completo -->
+      <section>
+        <h3>El Flujo de Trabajo Diario</h3>
+        <ol>
+          <li>Editar el código fuente (<code>token_scanner.c</code>).</li>
+          <li>Compilar y probar localmente (<code>gcc ... && ./token_scanner</code>).</li>
+          <li><code>git status</code> (Verificar cambios).</li>
+          <li><code>git add token_scanner.c .gitignore</code> (Preparar fuentes).</li>
+          <li><code>git commit -m "feat: agrega token_suma al scanner"</code> (Documentar).</li>
+          <li><code>git push origin main</code> (Publicar en GitHub).</li>
+        </ol>
+      </section>
+
+      <!-- SLIDE 7: El Reto de Hoy -->
+      <section>
+        <h3>Práctica de Hoy en el Laboratorio</h3>
+        <div class="box">
+          <ol style="font-size: 0.85em;">
+            <li>Abrir tu Codespace / terminal de Linux.</li>
+            <li>Escribir el código en C de <code>token_scanner.c</code>.</li>
+            <li>Compilarlo y ejecutarlo con <code>gcc -Wall -Wextra</code>.</li>
+            <li>Añadir el token de suma (<code>+</code>) y verificar que no arroje *warnings*.</li>
+            <li>Configurar <code>.gitignore</code> y hacer tu primer <code>push</code> a GitHub.</li>
+          </ol>
+        </div>
+        <p class="accent">&iexcl;Vamos al Laboratorio 01!</p>
+      </section>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [ RevealHighlight ]
+    });
+  </script>
+</body>
+</html>
