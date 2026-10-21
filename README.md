@@ -9,8 +9,51 @@ Repositorio oficial del curso de **Lenguajes y Autómatas II** del Tecnológico 
 ## 🚀 Flujo de Trabajo en la Nube (100% en Navegador)
 1. Realiza un **Fork** de este repositorio a tu cuenta personal de GitHub.
 2. Abre la sesión correspondiente con el botón **Open in Colab**.
-3. Sigue el ciclo **El Artesano** $\to$ **El Científico** $\to$ **El Auditor**.
-4. Copia la plantilla de `plantillas/auditoria_sesionXX.md` a `auditorias/auditoria_sesionXX.md` en tu Fork y realiza el commit.
+3. Sigue el ciclo **El Artesano** $\to$ **El Científico** $\to$ **El Auditor** hasta ver `TODO EN VERDE` en el *harness*.
+4. Copia la plantilla de `plantillas/auditoria_sesionXX.md` a `auditorias/auditoria_sesionXX.md` en tu Fork, adjunta la salida del *harness* y realiza el commit.
+
+---
+
+## 🧭 Cómo está armada cada sesión
+
+Cada presentación sigue el mismo recorrido de 8 láminas, para que siempre sepas dónde estás y a dónde vamos:
+
+1. **Portada** — tema, pregunta guía y objetivo de la sesión.
+2. **Conceptos básicos** — las ideas en lenguaje llano y con analogías, antes de los tecnicismos.
+3. **¿Dónde estamos y a dónde vamos?** — mapa de las 4 unidades y los 4 hitos.
+4. **Fundamentos teóricos**.
+5. **Arquitectura de memoria**.
+6. **Casos borde y antipatrones**.
+7. **Lo que vas a construir hoy** — entregable, reglas, criterios y la salida literal del *harness*.
+8. **Dinámica y entrega**.
+
+Cada laboratorio declara, antes de pedir una sola línea de código:
+
+* **Qué vas a construir** (operativo, sin repetir la teoría de la presentación).
+* **El contrato exacto**: `api_sesionNN.h` con la firma que tu implementación debe respetar.
+* **La tabla de casos** y **la salida literal** que el *harness* debe producir.
+* **Los criterios de aceptación**.
+
+El *harness* no aprueba por sí solo: compila tu archivo con `-Wall -Wextra -Werror`, ejecuta cada caso y termina con código 1 si algo falla. Mientras no implementes, la salida es roja.
+
+---
+
+## 🛠️ Regenerar el material (para el docente)
+
+El contenido vive en los módulos `contenido_teorico_bloqueN.py`; las presentaciones y las libretas se generan desde ahí. No edites los HTML ni los `.ipynb` a mano: se sobrescriben.
+
+```bash
+python3 generar_presentaciones.py      # las 40 presentaciones
+python3 generar_laboratorios.py        # las 40 libretas
+python3 validar_contenido.py           # esquema + compilación de los 40 harness
+```
+
+`validar_contenido.py` compila cada *harness* contra su implementación de referencia (guardada en `.referencias/`, una carpeta local que `.gitignore` excluye del repositorio público), exige que la salida coincida con la documentada y comprueba que el esqueleto del estudiante falla. También puedes validar por bloques o por sesión:
+
+```bash
+python3 validar_contenido.py --bloque 2
+python3 validar_contenido.py --sesion 7 -v
+```
 
 ---
 
