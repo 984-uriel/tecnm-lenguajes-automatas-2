@@ -45,6 +45,12 @@ Output: Devuelve únicamente el código fuente de la función y una breve explic
 ---
 ## 3. Código Devuelto por el Modelo
 
+**Archivo:** `ia_sesion01_c.c`
+
+```c
+#include "api_sesion01.h"
+#include <string.h>
+
 void invertir(char *s) {
     if (s == NULL) {
         return;
@@ -56,12 +62,13 @@ void invertir(char *s) {
     while (inicio < fin) {
         char temp = s[inicio];
         s[inicio] = s[fin];
-        s[fin] = temp;
+        s[fin] = temporal;
 
         inicio++;
         fin--;
     }
 }
+```
 
 ---
 ## 4. Fase 3: El Auditor (Resultados del Test Harness)
