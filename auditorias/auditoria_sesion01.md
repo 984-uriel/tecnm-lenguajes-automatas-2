@@ -45,6 +45,8 @@ Output: Devuelve únicamente el código fuente de la función y una breve explic
 ---
 ## 3. Código Devuelto por el Modelo
 
+La inteligencia artificial proporcionó una implementación que cumple con la firma requerida y permite invertir los caracteres sin crear una copia de la cadena.
+
 **Archivo:** `ia_sesion01_c.c`
 
 ```c
@@ -119,11 +121,11 @@ Todos los casos mostraron el estado OK y no se presentaron errores de compilaci�
 - [x] Ambas implementaciones se compilaron con `-Wall -Wextra -Werror`.
 
 ---
-Reporte Crítico
+## Reporte Crítico
 
-¿Qué caso borde o problema omitió la IA y cómo lo solucionaste?
+**¿Qué caso borde o problema omitió la IA y cómo lo solucionaste?**
 
 El caso borde más importante fue el manejo de valores NULL. Se verificó que, al recibir un puntero NULL, la función termina inmediatamente sin provocar un fallo de segmentación.
 
-Firma digital: 984-uriel
+**Firma digital:** 984-uriel
 
