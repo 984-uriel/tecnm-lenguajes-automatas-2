@@ -75,6 +75,36 @@ gcc -std=c11 -Wall -Wextra -Werror harness_sesion01_c.c artesano_sesion01_c.c -o
 Mientras no implementes nada, la salida es roja. Eso es normal: el *harness* no regala
 aprobados.
 
+### Cómo pedirle a la IA: el contrato C-R-E-O
+
+En la Fase 2 no se le pide código "a ver qué sale": se le da un contrato. El formato
+del curso es **C-R-E-O**:
+
+- **C — Contexto:** lenguaje, compilador, archivos que ya existen y prohibiciones.
+- **R — Rol:** qué especialista debe ser el modelo.
+- **E — Especificación:** las firmas exactas de `api_sesionNN.h` y las reglas del reto,
+  copiadas tal cual.
+- **O — Output:** qué debe entregar (solo el `.c`, sin `main`, sin `printf` de depuración).
+
+Ejemplo para la sesión 03:
+
+```text
+C — Contexto: C11, gcc -Wall -Wextra -Werror, Linux. El archivo api_sesion03.h
+    ya existe y no se puede modificar. Prohibido usar system().
+R — Rol: ingeniero de compiladores con experiencia en C y manejo de archivos.
+E — Especificación: implementa exactamente
+      int escribir_texto(const char *ruta, const char *texto);
+      int contar_lineas(const char *ruta);
+    Reglas: escribir_texto devuelve 0 si pudo escribir y -1 si no; contar_lineas
+    devuelve -1 si el archivo no abre, cuenta la última línea sin salto y devuelve 0
+    para un archivo vacío. Cierra el archivo en todos los caminos.
+O — Output: solo el contenido de artesano_sesion03_c.c, con
+    #include "api_sesion03.h", sin main() y sin printf.
+```
+
+Después compílalo: si no respeta la firma, el *harness* no compila; si la respeta pero
+falla un caso, el *harness* te dice exactamente cuál.
+
 ---
 
 ## 1. Tipos, variables y `const`
