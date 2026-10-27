@@ -301,15 +301,15 @@
     <!-- Lámina 7: lo que vas a construir hoy -->
     <section class="slide">
       <h2>Lo que vas a construir hoy</h2>
-      <p class="lead">Recibes la raíz de un árbol con hojas y operadores binarios. Debes escribir una línea TAC por operador en el arreglo lineas y devolver cuántas líneas emitiste; las hojas no generan instrucción, solo prestan su nombre.</p>
+      <p class="lead">Recibes la raíz de un árbol con hojas y operadores binarios. Debes escribir una línea TAC por operador en el arreglo lineas y devolver cuántas líneas emitiste. Los temporales ya están resueltos: úsalos con nuevo_temporal.</p>
       <div class="grid-lab">
         <div class="card static">
           <div class="card-header"><span style="color: var(--accent);">Entregable</span></div>
-          <p style="margin-bottom: 10px;">tu función generar_tac() en artesano_sesion22_c.c, el harness en verde y la bitácora en auditorias/auditoria_sesion22.md</p>
+          <p style="margin-bottom: 10px;">tu traductor en artesano_sesion22_c.c, el harness en verde y la bitácora</p>
           <div class="card-header" style="margin-top: 6px;"><span style="color: var(--accent-silver);">Reglas del reto</span></div>
-          <ul><li>Primero se calculan los hijos y después se emite el operador: el recorrido es postorden.</li><li>Cada llamada empieza en _t0 y no reutiliza un temporal mientras siga vivo.</li><li>Nunca escribas más de max líneas ni más de 31 caracteres por línea.</li></ul>
+          <ul><li>Primero se calculan los hijos y después se emite el operador: el recorrido es postorden.</li><li>Cada operador usa un temporal nuevo: llama a nuevo_temporal, no inventes el nombre.</li><li>Nunca escribas más de max líneas ni más de 63 caracteres por línea.</li></ul>
           <div class="card-header" style="margin-top: 8px;"><span style="color: var(--accent-green);">Se acepta cuando</span></div>
-          <ul><li>Cada operador genera exactamente una línea y las hojas no generan ninguna.</li><li>El orden de las líneas respeta la precedencia del árbol, no el orden de lectura.</li><li>Los seis casos del harness salen OK con código de salida 0.</li></ul>
+          <ul><li>Cada operador genera exactamente una línea y las hojas no generan ninguna.</li><li>Los temporales se numeran en orden y no se reutilizan.</li><li>El orden de las líneas respeta la precedencia del árbol.</li></ul>
         </div>
         <div class="terminal">
           <div class="terminal-bar">salida esperada del harness — sesión 22</div>

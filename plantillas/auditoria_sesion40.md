@@ -40,7 +40,7 @@
 ---
 
 ## 4. Fase 3: El Auditor (Resultados del Test Harness)
-*Pruebas ejecutadas:* Batería de 10 programas completos de prueba
+*Pruebas ejecutadas:* Seis programas representativos (la batería de 10 va en el proyecto)
 
 ### Salida del harness
 ```text

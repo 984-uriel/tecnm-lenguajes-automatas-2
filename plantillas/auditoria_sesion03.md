@@ -9,7 +9,7 @@
 ---
 
 ## 1. Fase 1: El Artesano (Dificultad Manual)
-*Reto:* Manipulación de archivos y llamadas OS  
+*Reto:* Escritura y conteo de líneas en archivos  
 *Describe qué problema o restricción de memoria/sintaxis identificaste al codificar a mano:*
 > 
 
@@ -40,7 +40,7 @@
 ---
 
 ## 4. Fase 3: El Auditor (Resultados del Test Harness)
-*Pruebas ejecutadas:* Detección de errores de compilación GCC
+*Pruebas ejecutadas:* Archivo vacío, sin salto final y ruta inexistente
 
 ### Salida del harness
 ```text

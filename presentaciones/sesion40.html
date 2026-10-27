@@ -301,15 +301,15 @@
     <!-- Lámina 7: lo que vas a construir hoy -->
     <section class="slide">
       <h2>Lo que vas a construir hoy</h2>
-      <p class="lead">Recibes un programa del mini lenguaje separado por punto y coma, con asignaciones x = expr y una sentencia return expr, y devuelves el valor final; cada expresión usa a lo sumo un operador entre dos átomos. El harness prueba seis programas representativos, mientras que la batería completa de diez vive en el proyecto del Hito 4.</p>
+      <p class="lead">El ayudante de lectura (nombres, números, variables) ya viene resuelto: solo escribes ejecutar_programa, que recorre las sentencias, guarda los valores y resuelve el return. Cada expresión usa a lo sumo un operador entre dos átomos.</p>
       <div class="grid-lab">
         <div class="card static">
           <div class="card-header"><span style="color: var(--accent);">Entregable</span></div>
           <p style="margin-bottom: 10px;">tu implementación de ejecutar_programa() en artesano_sesion40_c.c, el harness en verde y la bitácora en auditorias/auditoria_sesion40.md</p>
           <div class="card-header" style="margin-top: 6px;"><span style="color: var(--accent-silver);">Reglas del reto</span></div>
-          <ul><li>Las variables no asignadas valen cero y conservan su valor hasta el final del programa.</li><li>Solo se admiten los operadores +, - y *, aplicados una vez por expresión.</li><li>Si no hay return o el programa está vacío, el resultado es cero; NULL también devuelve cero.</li></ul>
+          <ul><li>Las variables no asignadas valen cero y conservan su valor hasta el final.</li><li>Solo se admiten +, - y *, aplicados una vez por expresión.</li><li>Si no hay return o el programa está vacío, el resultado es cero; NULL también devuelve cero.</li></ul>
           <div class="card-header" style="margin-top: 8px;"><span style="color: var(--accent-green);">Se acepta cuando</span></div>
-          <ul><li>ejecutar_programa respeta el orden de las asignaciones y resuelve variables ya definidas.</li><li>El resultado coincide con el oráculo en programas con una o varias sentencias, incluidos los casos vacíos.</li><li>Los seis casos del harness salen OK y el programa termina con código de salida 0.</li></ul>
+          <ul><li>El recorrido respeta el orden de las asignaciones y resuelve variables ya definidas.</li><li>El return devuelve el valor de la expresión y termina el programa.</li><li>Las variables no asignadas valen cero y el caso NULL devuelve cero.</li></ul>
         </div>
         <div class="terminal">
           <div class="terminal-bar">salida esperada del harness — sesión 40</div>

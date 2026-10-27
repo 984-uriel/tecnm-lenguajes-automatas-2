@@ -1,5 +1,5 @@
 # contenido_teorico_bloque1.py
-# Base de conocimiento conceptual: Unidad 1 (Sesiones 01 a 10)
+# Base de conocimiento conceptual: Unidad 1: Análisis Semántico y AST (Sesiones 01 a 10)
 # Materia: Lenguajes y Autómatas II (SCD-1016)
 # Docente Titular: MCC. Iván Márquez Larios (ijmarquezl)
 
@@ -139,24 +139,19 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                   'resultado': 'Una lista enlazada de tokens que crece token por token, se cuenta, se recorre y se libera sin fugas.'},
      'lab': {'reto': 'Lista enlazada de tokens en heap',
              'entregable': 'tu lista enlazada en artesano_sesion02_c.c, el harness en verde y la bitácora de la sesión',
-             'explicacion': 'Recibes lexemas como texto y debes encadenarlos en el heap. El harness crea una lista con varios tokens, '
-                            'comprueba el orden, el final de la cadena y que la liberación no reviente.',
-             'reglas': ['Cada nodo se reserva con malloc; nada de arreglos globales.',
-                        'El campo siguiente del último nodo debe valer NULL.',
+             'explicacion': 'Recibes la cabeza de una lista y un lexema, y devuelves la lista con el token agregado al final. El harness '
+                            'comprueba el orden, el final de la cadena y que liberar no reviente.',
+             'reglas': ['Cada nodo se reserva con malloc; el campo siguiente del último vale NULL.',
+                        'agregar_token devuelve la cabeza: si la lista estaba vacía, la nueva cabeza es el nodo creado.',
                         'liberar_lista(NULL) no debe caerse.'],
              'api': {'header': 'api_sesion02.h',
                      'tipos': ['typedef struct NodoToken {', '    char lexema[16];', '    struct NodoToken *siguiente;', '} NodoToken;'],
-                     'decls': ['NodoToken *crear_nodo(const char *lexema);',
-                               'void agregar_token(NodoToken **cabeza, const char *lexema);',
+                     'decls': ['NodoToken *agregar_token(NodoToken *cabeza, const char *lexema);',
                                'int contar_tokens(NodoToken *cabeza);',
                                'void liberar_lista(NodoToken *cabeza);']},
-             'stub': 'NodoToken *crear_nodo(const char *lexema) {\n'
-                     '    (void)lexema; /* TODO: reserva un nodo y copia el lexema */\n'
-                     '    return NULL;\n'
-                     '}\n'
-                     '\n'
-                     'void agregar_token(NodoToken **cabeza, const char *lexema) {\n'
-                     '    (void)cabeza; (void)lexema; /* TODO: crea el nodo y enlazalo al final */\n'
+             'stub': 'NodoToken *agregar_token(NodoToken *cabeza, const char *lexema) {\n'
+                     '    (void)lexema; /* TODO: reserva el nodo, copia el lexema y enlazalo al final */\n'
+                     '    return cabeza;\n'
                      '}\n'
                      '\n'
                      'int contar_tokens(NodoToken *cabeza) {\n'
@@ -167,35 +162,38 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                      'void liberar_lista(NodoToken *cabeza) {\n'
                      '    (void)cabeza; /* TODO: libera sin perder el puntero al siguiente */\n'
                      '}',
-             'casos': [{'caso': 'crear_nodo("if")->lexema',
-                        'codigo': 'NodoToken *n = crear_nodo("if");',
-                        'var': '(n != NULL ? n->lexema : "(NULL)")',
+             'casos': [{'caso': 'agregar_token(NULL,"if")',
+                        'codigo': 'NodoToken *c = agregar_token(NULL, "if");',
+                        'var': '(c != NULL ? c->lexema : "(NULL)")',
                         'esperado': 'if',
                         'tipo': 'str'},
                        {'caso': 'contar_tokens(3 tokens)',
-                        'codigo': 'NodoToken *c = NULL;\nagregar_token(&c, "if");\nagregar_token(&c, "x");\nagregar_token(&c, ";");',
+                        'codigo': 'NodoToken *c = NULL;\n'
+                                  'c = agregar_token(c, "if");\n'
+                                  'c = agregar_token(c, "x");\n'
+                                  'c = agregar_token(c, ";");',
                         'var': 'contar_tokens(c)',
                         'esperado': 3,
                         'tipo': 'int'},
                        {'caso': 'orden: segundo token',
-                        'codigo': 'NodoToken *c = NULL;\nagregar_token(&c, "uno");\nagregar_token(&c, "dos");',
+                        'codigo': 'NodoToken *c = NULL;\nc = agregar_token(c, "uno");\nc = agregar_token(c, "dos");',
                         'var': '(c && c->siguiente ? c->siguiente->lexema : "(NULL)")',
                         'esperado': 'dos',
                         'tipo': 'str'},
                        {'caso': 'ultimo->siguiente == NULL',
-                        'codigo': 'NodoToken *c = NULL;\nagregar_token(&c, "a");\nagregar_token(&c, "b");',
+                        'codigo': 'NodoToken *c = NULL;\nc = agregar_token(c, "a");\nc = agregar_token(c, "b");',
                         'var': '(c && c->siguiente ? (c->siguiente->siguiente == NULL) : 0)',
                         'esperado': 1,
                         'tipo': 'int'},
                        {'caso': 'contar_tokens(NULL)', 'codigo': '', 'var': 'contar_tokens(NULL)', 'esperado': 0, 'tipo': 'int'},
                        {'caso': 'liberar_lista(NULL)',
-                        'codigo': 'NodoToken *c = NULL;\nagregar_token(&c, "a");\nliberar_lista(c);\nliberar_lista(NULL);',
+                        'codigo': 'NodoToken *c = NULL;\nc = agregar_token(c, "a");\nliberar_lista(c);\nliberar_lista(NULL);',
                         'var': '"sin crash"',
                         'esperado': 'sin crash',
                         'tipo': 'str'}],
              'criterios': ['Cada token ocupa un nodo reservado con malloc y encadenado con siguiente.',
-                           'contar_tokens(NULL) devuelve 0 y liberar_lista(NULL) no se cae.',
-                           'Los seis casos del harness salen OK con código de salida 0.']}},
+                           'agregar_token devuelve la lista completa aunque la cabeza cambie.',
+                           'contar_tokens(NULL) devuelve 0 y liberar_lista(NULL) no se cae.']}},
  3: {'tema': 'Google Colab, Mágicos y Flujo de Entrega',
      'unidad': 'Unidad 1: Análisis Semántico y AST',
      'teoria_principal': {'titulo': 'Automatización de Compiladores en Entornos Linux',
@@ -248,17 +246,15 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                                  'Como el detector de humo que corta la energía: molesto, pero evita el incendio.')],
                   'resultado': 'Tres funciones en C que escriben y leen archivos y que reportan el código de salida real de un comando '
                                'externo.'},
-     'lab': {'reto': 'Archivos y códigos de salida',
+     'lab': {'reto': 'Archivos: escribir y contar líneas',
              'entregable': 'tus funciones en artesano_sesion03_c.c, el harness en verde y la bitácora de la sesión',
-             'explicacion': 'Tu programa debe escribir un archivo de texto, contar sus líneas y ejecutar un comando externo devolviendo su '
-                            'código de salida real, no el estado interno que entrega system().',
-             'reglas': ['Usa fopen/fputs o fgets y cierra siempre el archivo.',
+             'explicacion': 'Tu programa escribe un archivo de texto y luego cuenta sus líneas. El harness prueba los tres casos que '
+                            'rompen a casi todos: archivo sin salto final, archivo vacío y ruta inexistente.',
+             'reglas': ['Usa fopen/fgetc o fgets y cierra siempre el archivo.',
                         'Un archivo inexistente se reporta con -1, no con un aborto.',
-                        'El código de salida se extrae con WEXITSTATUS.'],
+                        'Una última línea sin salto de línea también cuenta.'],
              'api': {'header': 'api_sesion03.h',
-                     'decls': ['int escribir_texto(const char *ruta, const char *texto);',
-                               'int contar_lineas(const char *ruta);',
-                               'int ejecutar(const char *comando);']},
+                     'decls': ['int escribir_texto(const char *ruta, const char *texto);', 'int contar_lineas(const char *ruta);']},
              'stub': 'int escribir_texto(const char *ruta, const char *texto) {\n'
                      '    (void)ruta; (void)texto; /* TODO: abre, escribe, cierra */\n'
                      '    return -1;\n'
@@ -266,11 +262,6 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                      '\n'
                      'int contar_lineas(const char *ruta) {\n'
                      '    (void)ruta; /* TODO: cuenta saltos de linea y no olvides la ultima */\n'
-                     '    return -1;\n'
-                     '}\n'
-                     '\n'
-                     'int ejecutar(const char *comando) {\n'
-                     '    (void)comando; /* TODO: system() y WEXITSTATUS */\n'
                      '    return -1;\n'
                      '}',
              'casos': [{'caso': 'escribir_texto(...)==0',
@@ -288,16 +279,24 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                         'var': 'contar_lineas("datos2.txt")',
                         'esperado': 2,
                         'tipo': 'int'},
+                       {'caso': 'contar_lineas(archivo vacio)',
+                        'codigo': 'escribir_texto("vacio.txt", "");',
+                        'var': 'contar_lineas("vacio.txt")',
+                        'esperado': 0,
+                        'tipo': 'int'},
                        {'caso': 'contar_lineas(inexistente)',
                         'codigo': '',
                         'var': 'contar_lineas("no_existe.txt")',
                         'esperado': -1,
                         'tipo': 'int'},
-                       {'caso': 'ejecutar("true")', 'codigo': '', 'var': 'ejecutar("true")', 'esperado': 0, 'tipo': 'int'},
-                       {'caso': 'ejecutar("false")', 'codigo': '', 'var': 'ejecutar("false")', 'esperado': 1, 'tipo': 'int'}],
+                       {'caso': 'escribir_texto(ruta invalida)',
+                        'codigo': '',
+                        'var': 'escribir_texto("/no/existe/x.txt", "a")',
+                        'esperado': -1,
+                        'tipo': 'int'}],
              'criterios': ['Los archivos se cierran en todos los caminos y un error se reporta con -1.',
-                           'contar_lineas distingue un archivo con salto final de uno sin él.',
-                           'ejecutar devuelve 0 para un comando exitoso y 1 para uno fallido.']}},
+                           'contar_lineas distingue un archivo vacío, uno con salto final y uno sin él.',
+                           'escribir_texto falla con -1 si la ruta no se puede abrir.']}},
  4: {'tema': 'Anatomía de un Árbol Sintáctico Abstracto (AST)',
      'unidad': 'Unidad 1: Análisis Semántico y AST',
      'teoria_principal': {'titulo': 'De Árbol de Derivación Concreta (CST) a AST',
@@ -351,10 +350,10 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
      'lab': {'reto': 'Nodo binario de AST',
              'entregable': 'tu AST en artesano_sesion04_c.c, el harness en verde y la bitácora de la sesión',
              'explicacion': 'Construyes nodos numéricos y binarios, los enlazas y el harness recorre el árbol para comprobar su forma y su '
-                            'valor.',
+                            'valor. Solo se evalúan +, - y *.',
              'reglas': ['TipoNodo distingue número de operación; no uses campos mágicos.',
                         'Cada nodo se reserva en el heap.',
-                        'liberar_arbol(NULL) y evaluar(NULL) no deben caerse.'],
+                        'evaluar(NULL) devuelve -1 y no debe caerse.'],
              'api': {'header': 'api_sesion04.h',
                      'tipos': ['typedef enum { NODO_NUM, NODO_BINOP } TipoNodo;',
                                'typedef struct ASTNode {',
@@ -366,8 +365,7 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                                '} ASTNode;'],
                      'decls': ['ASTNode *crear_numero(int v);',
                                'ASTNode *crear_binario(char op, ASTNode *izq, ASTNode *der);',
-                               'int evaluar(ASTNode *n);',
-                               'void liberar_arbol(ASTNode *n);']},
+                               'int evaluar(ASTNode *n);']},
              'stub': 'ASTNode *crear_numero(int v) {\n'
                      '    (void)v; /* TODO: reserva y llena un nodo NUM */\n'
                      '    return NULL;\n'
@@ -379,12 +377,8 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                      '}\n'
                      '\n'
                      'int evaluar(ASTNode *n) {\n'
-                     '    (void)n; /* TODO: caso base (hoja) y caso recursivo */\n'
+                     '    (void)n; /* TODO: caso base (hoja) y caso recursivo con + - * */\n'
                      '    return -1;\n'
-                     '}\n'
-                     '\n'
-                     'void liberar_arbol(ASTNode *n) {\n'
-                     '    (void)n; /* TODO: libera de abajo hacia arriba */\n'
                      '}',
              'casos': [{'caso': 'evaluar(nodo 42)',
                         'codigo': 'ASTNode *n = crear_numero(42);',
@@ -410,14 +404,14 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                         'esperado': '*',
                         'tipo': 'str'},
                        {'caso': 'evaluar(NULL)', 'codigo': '', 'var': 'evaluar(NULL)', 'esperado': -1, 'tipo': 'int'},
-                       {'caso': 'liberar_arbol(NULL)',
-                        'codigo': 'liberar_arbol(NULL);',
-                        'var': '"sin crash"',
-                        'esperado': 'sin crash',
-                        'tipo': 'str'}],
+                       {'caso': 'evaluar(10-4)',
+                        'codigo': "ASTNode *n = crear_binario('-', crear_numero(10), crear_numero(4));",
+                        'var': 'evaluar(n)',
+                        'esperado': 6,
+                        'tipo': 'int'}],
              'criterios': ['crear_binario respeta el orden izquierdo/derecho de los hijos.',
                            'evaluar aplica el operador después de evaluar ambos hijos.',
-                           'liberar_arbol(NULL) y evaluar(NULL) no provocan fallo de segmentación.']}},
+                           'evaluar(NULL) devuelve -1 sin provocar fallo de segmentación.']}},
  5: {'tema': 'Recorridos del AST y Notación Polaca Inversa',
      'unidad': 'Unidad 1: Análisis Semántico y AST',
      'teoria_principal': {'titulo': 'Patrones de Recorrido y Orden Topológico',
@@ -986,15 +980,52 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                                 'entre cero.'},
       'lab': {'reto': 'Mini-evaluador de expresiones (Hito 1)',
               'entregable': 'tu evaluador completo en artesano_sesion10_c.c, el harness en verde y la bitácora del hito',
-              'explicacion': 'Implementas evaluar_expresion(texto,&error): lee enteros, + - * /, paréntesis y espacios, y devuelve el '
-                             'valor. error=1 es división entre cero; error=2, sintaxis inválida.',
-              'reglas': ['Sin variables: solo enteros y operadores.',
+              'explicacion': 'El analizador ya viene armado: solo completas primaria, termino y expr. Debes leer enteros, + - * /, '
+                             'paréntesis y espacios. error=1 es división entre cero; error=2, sintaxis inválida.',
+              'reglas': ['Sin variables ni menos unario: solo enteros y los operadores + - * /.',
                          'Respeta precedencia y paréntesis.',
-                         'No uses eval ni bibliotecas de expresiones: el analizador es tuyo.'],
+                         'Completa las tres funciones marcadas; no cambies la firma de evaluar_expresion.'],
               'api': {'header': 'api_sesion10.h', 'decls': ['long evaluar_expresion(const char *fuente, int *error);']},
-              'stub': 'long evaluar_expresion(const char *fuente, int *error) {\n'
-                      '    (void)fuente; (void)error; /* TODO: analisis descendente + evaluacion */\n'
+              'stub': '#include <ctype.h>\n'
+                      '\n'
+                      '/* El analizador ya viene armado: completa las tres funciones marcadas. */\n'
+                      'typedef struct { const char *s; int error; } Parser;\n'
+                      '\n'
+                      'static void saltar(Parser *p) {\n'
+                      "    while (*p->s == ' ') p->s++;\n"
+                      '}\n'
+                      '\n'
+                      'long expr(Parser *p);\n'
+                      '\n'
+                      'long primaria(Parser *p) {\n'
+                      "    /* TODO: si hay '(' resuelve expr y consume ')'; si hay digito leelo; si no, error 2 */\n"
+                      '    (void)p;\n'
                       '    return 0;\n'
+                      '}\n'
+                      '\n'
+                      'long termino(Parser *p) {\n'
+                      "    /* TODO: empieza con primaria y repite mientras veas '*' o '/' */\n"
+                      '    (void)p;\n'
+                      '    return 0;\n'
+                      '}\n'
+                      '\n'
+                      'long expr(Parser *p) {\n'
+                      "    /* TODO: empieza con termino y repite mientras veas '+' o '-' */\n"
+                      '    (void)p;\n'
+                      '    return 0;\n'
+                      '}\n'
+                      '\n'
+                      'long evaluar_expresion(const char *fuente, int *error) {\n'
+                      '    static int sin_error;\n'
+                      '    if (error == NULL) error = &sin_error;\n'
+                      '    *error = 0;\n'
+                      '    if (fuente == NULL) { *error = 2; return 0; }\n'
+                      '    Parser p = { fuente, 0 };\n'
+                      '    long v = expr(&p);\n'
+                      '    saltar(&p);\n'
+                      "    if (p.error == 0 && *p.s != '\\0') p.error = 2;\n"
+                      '    *error = p.error;\n'
+                      '    return p.error != 0 ? 0 : v;\n'
                       '}',
               'casos': [{'caso': '"2+3*4"',
                          'codigo': 'int e=0;\nlong r=evaluar_expresion("2+3*4",&e);\n(void)e;',
@@ -1021,10 +1052,10 @@ TEORIA_BLOQUE_1 = {1: {'tema': 'Encuadre, Diagnóstico de Punteros y Metodologí
                          'var': 'r',
                          'esperado': 7,
                          'tipo': 'int'},
-                        {'caso': '"-5+10"',
-                         'codigo': 'int e=0;\nlong r=evaluar_expresion("-5+10",&e);\n(void)e;',
+                        {'caso': '"5-10"',
+                         'codigo': 'int e=0;\nlong r=evaluar_expresion("5-10",&e);\n(void)e;',
                          'var': 'r',
-                         'esperado': 5,
+                         'esperado': -5,
                          'tipo': 'int'}],
               'criterios': ['El analizador respeta precedencia: la multiplicación se resuelve antes que la suma.',
                             'Los paréntesis y los espacios no alteran el resultado.',

@@ -38,6 +38,12 @@ El *harness* no aprueba por sí solo: compila tu archivo con `-Wall -Wextra -Wer
 
 ---
 
+## 🧰 ¿No te acuerdas de C?
+
+La **[guía de C](docs/guia-c.md)** reúne los elementos del lenguaje que usan los laboratorios: punteros, `struct`, memoria dinámica, arreglos 2D, recursión, archivos y los errores de gcc más frecuentes. Incluye un mapa de qué repasar antes de cada una de las 40 sesiones y ejercicios de calentamiento.
+
+---
+
 ## 🛠️ Regenerar el material (para el docente)
 
 El contenido vive en los módulos `contenido_teorico_bloqueN.py`; las presentaciones y las libretas se generan desde ahí. No edites los HTML ni los `.ipynb` a mano: se sobrescriben.

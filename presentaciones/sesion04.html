@@ -301,15 +301,15 @@
     <!-- Lámina 7: lo que vas a construir hoy -->
     <section class="slide">
       <h2>Lo que vas a construir hoy</h2>
-      <p class="lead">Construyes nodos numéricos y binarios, los enlazas y el harness recorre el árbol para comprobar su forma y su valor.</p>
+      <p class="lead">Construyes nodos numéricos y binarios, los enlazas y el harness recorre el árbol para comprobar su forma y su valor. Solo se evalúan +, - y *.</p>
       <div class="grid-lab">
         <div class="card static">
           <div class="card-header"><span style="color: var(--accent);">Entregable</span></div>
           <p style="margin-bottom: 10px;">tu AST en artesano_sesion04_c.c, el harness en verde y la bitácora de la sesión</p>
           <div class="card-header" style="margin-top: 6px;"><span style="color: var(--accent-silver);">Reglas del reto</span></div>
-          <ul><li>TipoNodo distingue número de operación; no uses campos mágicos.</li><li>Cada nodo se reserva en el heap.</li><li>liberar_arbol(NULL) y evaluar(NULL) no deben caerse.</li></ul>
+          <ul><li>TipoNodo distingue número de operación; no uses campos mágicos.</li><li>Cada nodo se reserva en el heap.</li><li>evaluar(NULL) devuelve -1 y no debe caerse.</li></ul>
           <div class="card-header" style="margin-top: 8px;"><span style="color: var(--accent-green);">Se acepta cuando</span></div>
-          <ul><li>crear_binario respeta el orden izquierdo/derecho de los hijos.</li><li>evaluar aplica el operador después de evaluar ambos hijos.</li><li>liberar_arbol(NULL) y evaluar(NULL) no provocan fallo de segmentación.</li></ul>
+          <ul><li>crear_binario respeta el orden izquierdo/derecho de los hijos.</li><li>evaluar aplica el operador después de evaluar ambos hijos.</li><li>evaluar(NULL) devuelve -1 sin provocar fallo de segmentación.</li></ul>
         </div>
         <div class="terminal">
           <div class="terminal-bar">salida esperada del harness — sesión 04</div>
@@ -320,7 +320,7 @@ Caso                               esperado:              obtenido:             
 [ 3] hijo izquierdo de (* 5 2)          esperado: 5            obtenido: 5            OK
 [ 4] operador guardado                  esperado: *            obtenido: *            OK
 [ 5] evaluar(NULL)                      esperado: -1           obtenido: -1           OK
-[ 6] liberar_arbol(NULL)                esperado: sin crash    obtenido: sin crash    OK
+[ 6] evaluar(10-4)                      esperado: 6            obtenido: 6            OK
 
 RESULTADO: 6/6 pruebas superadas
 TODO EN VERDE. Documenta tu auditoria en auditorias/auditoria_sesion04.md</pre>

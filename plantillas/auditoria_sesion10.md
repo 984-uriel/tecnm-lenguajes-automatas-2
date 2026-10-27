@@ -40,7 +40,7 @@
 ---
 
 ## 4. Fase 3: El Auditor (Resultados del Test Harness)
-*Pruebas ejecutadas:* Batería de 10 expresiones mixtas complejas
+*Pruebas ejecutadas:* Precedencia, paréntesis, división entre cero y sintaxis inválida
 
 ### Salida del harness
 ```text

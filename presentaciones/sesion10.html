@@ -301,13 +301,13 @@
     <!-- Lámina 7: lo que vas a construir hoy -->
     <section class="slide">
       <h2>Lo que vas a construir hoy</h2>
-      <p class="lead">Implementas evaluar_expresion(texto,&amp;error): lee enteros, + - * /, paréntesis y espacios, y devuelve el valor. error=1 es división entre cero; error=2, sintaxis inválida.</p>
+      <p class="lead">El analizador ya viene armado: solo completas primaria, termino y expr. Debes leer enteros, + - * /, paréntesis y espacios. error=1 es división entre cero; error=2, sintaxis inválida.</p>
       <div class="grid-lab">
         <div class="card static">
           <div class="card-header"><span style="color: var(--accent);">Entregable</span></div>
           <p style="margin-bottom: 10px;">tu evaluador completo en artesano_sesion10_c.c, el harness en verde y la bitácora del hito</p>
           <div class="card-header" style="margin-top: 6px;"><span style="color: var(--accent-silver);">Reglas del reto</span></div>
-          <ul><li>Sin variables: solo enteros y operadores.</li><li>Respeta precedencia y paréntesis.</li><li>No uses eval ni bibliotecas de expresiones: el analizador es tuyo.</li></ul>
+          <ul><li>Sin variables ni menos unario: solo enteros y los operadores + - * /.</li><li>Respeta precedencia y paréntesis.</li><li>Completa las tres funciones marcadas; no cambies la firma de evaluar_expresion.</li></ul>
           <div class="card-header" style="margin-top: 8px;"><span style="color: var(--accent-green);">Se acepta cuando</span></div>
           <ul><li>El analizador respeta precedencia: la multiplicación se resuelve antes que la suma.</li><li>Los paréntesis y los espacios no alteran el resultado.</li><li>La división entre cero y la sintaxis inválida se reportan con códigos distintos.</li></ul>
         </div>
@@ -320,7 +320,7 @@ Caso                               esperado:              obtenido:             
 [ 3] "10/0" -&gt; error 1                  esperado: 1            obtenido: 1            OK
 [ 4] "2+" -&gt; error 2                    esperado: 2            obtenido: 2            OK
 [ 5] "  7 "                             esperado: 7            obtenido: 7            OK
-[ 6] "-5+10"                            esperado: 5            obtenido: 5            OK
+[ 6] "5-10"                             esperado: -5           obtenido: -5           OK
 
 RESULTADO: 6/6 pruebas superadas
 TODO EN VERDE. Documenta tu auditoria en auditorias/auditoria_sesion10.md</pre>

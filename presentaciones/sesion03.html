@@ -301,26 +301,26 @@
     <!-- Lámina 7: lo que vas a construir hoy -->
     <section class="slide">
       <h2>Lo que vas a construir hoy</h2>
-      <p class="lead">Tu programa debe escribir un archivo de texto, contar sus líneas y ejecutar un comando externo devolviendo su código de salida real, no el estado interno que entrega system().</p>
+      <p class="lead">Tu programa escribe un archivo de texto y luego cuenta sus líneas. El harness prueba los tres casos que rompen a casi todos: archivo sin salto final, archivo vacío y ruta inexistente.</p>
       <div class="grid-lab">
         <div class="card static">
           <div class="card-header"><span style="color: var(--accent);">Entregable</span></div>
           <p style="margin-bottom: 10px;">tus funciones en artesano_sesion03_c.c, el harness en verde y la bitácora de la sesión</p>
           <div class="card-header" style="margin-top: 6px;"><span style="color: var(--accent-silver);">Reglas del reto</span></div>
-          <ul><li>Usa fopen/fputs o fgets y cierra siempre el archivo.</li><li>Un archivo inexistente se reporta con -1, no con un aborto.</li><li>El código de salida se extrae con WEXITSTATUS.</li></ul>
+          <ul><li>Usa fopen/fgetc o fgets y cierra siempre el archivo.</li><li>Un archivo inexistente se reporta con -1, no con un aborto.</li><li>Una última línea sin salto de línea también cuenta.</li></ul>
           <div class="card-header" style="margin-top: 8px;"><span style="color: var(--accent-green);">Se acepta cuando</span></div>
-          <ul><li>Los archivos se cierran en todos los caminos y un error se reporta con -1.</li><li>contar_lineas distingue un archivo con salto final de uno sin él.</li><li>ejecutar devuelve 0 para un comando exitoso y 1 para uno fallido.</li></ul>
+          <ul><li>Los archivos se cierran en todos los caminos y un error se reporta con -1.</li><li>contar_lineas distingue un archivo vacío, uno con salto final y uno sin él.</li><li>escribir_texto falla con -1 si la ruta no se puede abrir.</li></ul>
         </div>
         <div class="terminal">
           <div class="terminal-bar">salida esperada del harness — sesión 03</div>
-          <pre>=== AUDITORIA SESION 03 - Archivos y codigos de salida ===
+          <pre>=== AUDITORIA SESION 03 - Archivos: escribir y contar lineas ===
 Caso                               esperado:              obtenido:              resultado
 [ 1] escribir_texto(...)==0             esperado: 0            obtenido: 0            OK
 [ 2] contar_lineas(3 lineas)            esperado: 3            obtenido: 3            OK
 [ 3] contar_lineas(sin salto final)     esperado: 2            obtenido: 2            OK
-[ 4] contar_lineas(inexistente)         esperado: -1           obtenido: -1           OK
-[ 5] ejecutar("true")                   esperado: 0            obtenido: 0            OK
-[ 6] ejecutar("false")                  esperado: 1            obtenido: 1            OK
+[ 4] contar_lineas(archivo vacio)       esperado: 0            obtenido: 0            OK
+[ 5] contar_lineas(inexistente)         esperado: -1           obtenido: -1           OK
+[ 6] escribir_texto(ruta invalida)      esperado: -1           obtenido: -1           OK
 
 RESULTADO: 6/6 pruebas superadas
 TODO EN VERDE. Documenta tu auditoria en auditorias/auditoria_sesion03.md</pre>

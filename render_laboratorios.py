@@ -80,6 +80,8 @@ def render(num: int, data: dict, total: int = 40) -> dict:
 **Entregable:** {lab["entregable"]}
 
 **Tiempo:** 60 min · **Fases:** Artesano (manual) → Científico (IA con contrato) → Auditor (harness)
+
+> ¿Dudas de C? Consulta la [guía de C]({REPO}/blob/main/docs/guia-c.md) antes de empezar.
 """
 
     que_construyo = f"""## 1. ¿Qué vas a construir?

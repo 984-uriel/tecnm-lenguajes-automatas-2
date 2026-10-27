@@ -301,21 +301,21 @@
     <!-- Lámina 7: lo que vas a construir hoy -->
     <section class="slide">
       <h2>Lo que vas a construir hoy</h2>
-      <p class="lead">Recibes lexemas como texto y debes encadenarlos en el heap. El harness crea una lista con varios tokens, comprueba el orden, el final de la cadena y que la liberación no reviente.</p>
+      <p class="lead">Recibes la cabeza de una lista y un lexema, y devuelves la lista con el token agregado al final. El harness comprueba el orden, el final de la cadena y que liberar no reviente.</p>
       <div class="grid-lab">
         <div class="card static">
           <div class="card-header"><span style="color: var(--accent);">Entregable</span></div>
           <p style="margin-bottom: 10px;">tu lista enlazada en artesano_sesion02_c.c, el harness en verde y la bitácora de la sesión</p>
           <div class="card-header" style="margin-top: 6px;"><span style="color: var(--accent-silver);">Reglas del reto</span></div>
-          <ul><li>Cada nodo se reserva con malloc; nada de arreglos globales.</li><li>El campo siguiente del último nodo debe valer NULL.</li><li>liberar_lista(NULL) no debe caerse.</li></ul>
+          <ul><li>Cada nodo se reserva con malloc; el campo siguiente del último vale NULL.</li><li>agregar_token devuelve la cabeza: si la lista estaba vacía, la nueva cabeza es el nodo creado.</li><li>liberar_lista(NULL) no debe caerse.</li></ul>
           <div class="card-header" style="margin-top: 8px;"><span style="color: var(--accent-green);">Se acepta cuando</span></div>
-          <ul><li>Cada token ocupa un nodo reservado con malloc y encadenado con siguiente.</li><li>contar_tokens(NULL) devuelve 0 y liberar_lista(NULL) no se cae.</li><li>Los seis casos del harness salen OK con código de salida 0.</li></ul>
+          <ul><li>Cada token ocupa un nodo reservado con malloc y encadenado con siguiente.</li><li>agregar_token devuelve la lista completa aunque la cabeza cambie.</li><li>contar_tokens(NULL) devuelve 0 y liberar_lista(NULL) no se cae.</li></ul>
         </div>
         <div class="terminal">
           <div class="terminal-bar">salida esperada del harness — sesión 02</div>
           <pre>=== AUDITORIA SESION 02 - Lista enlazada de tokens en heap ===
 Caso                               esperado:              obtenido:              resultado
-[ 1] crear_nodo("if")-&gt;lexema           esperado: if           obtenido: if           OK
+[ 1] agregar_token(NULL,"if")           esperado: if           obtenido: if           OK
 [ 2] contar_tokens(3 tokens)            esperado: 3            obtenido: 3            OK
 [ 3] orden: segundo token               esperado: dos          obtenido: dos          OK
 [ 4] ultimo-&gt;siguiente == NULL          esperado: 1            obtenido: 1            OK
