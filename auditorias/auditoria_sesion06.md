@@ -27,7 +27,10 @@
 
 ### 2.2 Prompt Estructurado
 ```text
-[Pega aquí el prompt formal que redactaste para la IA]
+[Contexto]: Estás programando en lenguaje C99 bajo un entorno de compilación estricto con GCC (-Wall -Wextra -Werror) para la materia de Lenguajes y Autómatas II. Debes implementar el contrato definido en 'api_sesion06.h' para un sistema de tipos primitivos (CHAR, INT, FLOAT, ERROR).
+[Rol]: Ingeniero de software especialista en sistemas y compiladores, experto en validación semántica de tipos y tablas de compatibilidad.
+[Especificación]: Escribe las funciones 'compatible(Tipo destino, Tipo origen)' y 'nombre_tipo(Tipo t)'. La jerarquía de tipos es CHAR < INT < FLOAT. Asignar a un tipo más angosto se rechaza (retorna 0), y TIPO_ERROR nunca es compatible con nada (retorna 0). Incluye protecciones estrictas contra desbordamientos de índices y validaciones de límites.
+[Output]: Únicamente el código fuente en C modular, limpio, sin la función main(), listo para integrarse al harness de pruebas.
 ```
 
 ---
