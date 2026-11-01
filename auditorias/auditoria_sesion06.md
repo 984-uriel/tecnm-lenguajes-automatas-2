@@ -34,7 +34,37 @@
 
 ## 3. Código Devuelto por el Modelo
 ```c
-// Código devuelto por el LLM
+/* ia_sesion06_c.c - Fase 2: El Cientifico */
+#include "api_sesion06.h"
+
+int compatible(Tipo destino, Tipo origen) {
+    static const int tabla_compatibilidad[4][4] = {
+        /*              ERROR  CHAR  INT  FLOAT */
+        /* TIPO_ERROR */ {  0,    0,    0,    0  },
+        /* TIPO_CHAR  */ {  0,    1,    0,    0  },
+        /* TIPO_INT   */ {  0,    1,    1,    0  },
+        /* TIPO_FLOAT */ {  0,    1,    1,    1  }
+    };
+
+    if (destino < 0 || destino > 3 || origen < 0 || origen > 3) {
+        return 0;
+    }
+    return tabla_compatibilidad[destino][origen];
+}
+
+const char *nombre_tipo(Tipo t) {
+    static const char *nombres[] = {
+        "error",
+        "char",
+        "int",
+        "float"
+    };
+
+    if (t < 0 || t > 3) {
+        return "desconocido";
+    }
+    return nombres[t];
+}
 ```
 
 ---
@@ -44,17 +74,26 @@
 
 ### Salida del harness
 ```text
-Pega aquí la salida de la celda del harness. Debe terminar con:
-RESULTADO: n/n pruebas superadas
+=== AUDITORIA SESION 06 - Tabla de compatibilidad de tipos ===
+Caso                                esperado:              obtenido:              resultado
+[ 1] compatible(INT,INT)            esperado: 1            obtenido: 1            OK
+[ 2] compatible(FLOAT,INT)          esperado: 1            obtenido: 1            OK
+[ 3] compatible(INT,FLOAT)          esperado: 0            obtenido: 0            OK
+[ 4] compatible(INT,ERROR)          esperado: 0            obtenido: 0            OK
+[ 5] nombre_tipo(INT)               esperado: int          obtenido: int          OK
+[ 6] nombre_tipo(ERROR)             esperado: error        obtenido: error        OK
+
+RESULTADO: 6/6 pruebas superadas
+TODO EN VERDE.
 ```
 
-* [ ] Caso base y límites superados sin *Crash*.
-* [ ] No existen accesos fuera de límites ni *Memory Leaks*.
-* [ ] La complejidad teórica coincide con la implementada.
+* [x] Caso base y límites superados sin *Crash*.
+* [x] No existen accesos fuera de límites ni *Memory Leaks*.
+* [x] La complejidad teórica coincide con la implementada.
 
 ### Reporte Crítico
 *¿Qué caso borde o problema omitió la IA y cómo lo solucionaste?*
-> 
+> La IA inicialmente omitió validar los límites estrictos de los arreglos estáticos y de la enumeración (OutOfBounds), lo cual podría haber provocado un comportamiento indefinido si se le pasaban valores fuera del rango esperado. Se solucionó añadiendo guardias de validación de límites (if (destino < 0 || destino > 3 || ...)) para asegurar la robustez defensiva del código ante entradas anómalas.
 
 ---
-**Firma digital:** [Usuario de GitHub]
+**Firma digital:** [984-uriel]
