@@ -2,8 +2,8 @@
 **Materia:** Lenguajes y Autómatas II (SCD-1016)  
 **Tema:** Sistema de Tipos Primitivos  
 **Docente Titular:** MCC. Iván Márquez Larios (`ijmarquezl`)  
-**Estudiante:** [Nombre Completo]  
-**Matrícula:** [No. de Control]  
+**Estudiante:** [Jonathan Uriel Che Castillo]  
+**Matrícula:** [No.24531349]  
 **Track:** C (el harness evalúa C; la versión en Rust es opcional y no se califica con este harness)  
 
 ---
@@ -11,7 +11,7 @@
 ## 1. Fase 1: El Artesano (Dificultad Manual)
 *Reto:* Chequeo de compatibilidad de tipos  
 *Describe qué problema o restricción de memoria/sintaxis identificaste al codificar a mano:*
-> 
+ > Al codificar a mano, fue necesario estructurar correctamente la jerarquía estricta de los tipos primitivos (`CHAR < INT < FLOAT`) mediante operadores de comparación relacional, asegurando que `TIPO_ERROR` actuara como una condición de bloqueo absoluta que impidiera cualquier asignación inválida.
 
 ---
 
