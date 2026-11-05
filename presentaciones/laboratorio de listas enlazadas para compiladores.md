@@ -44,6 +44,10 @@ typedef struct TokenNode {
 /* Prototipos */
 TokenNode* token_node_create(TokenType type, const char *lexeme, int line);
 void token_list_append(TokenNode **head, TokenType type, const char *lexeme, int line);
+void token_list_print(const TokenNode *head);
+void token_list_free(TokenNode **head);
+
+#endif
 ```
 
 ```c
@@ -110,42 +114,31 @@ int main(void) {
 
     return 0;
 }
-void token_list_print(const TokenNode *head);
-void token_list_free(TokenNode **head);
 ```
 
-3. Ejercicio de Programación
-Problema: Modifica token_list_append para mantener un puntero al último elemento (tail), logrando inserciones con complejidad 
-𝑂
-(
-1
-)
-O(1) en lugar de 
-𝑂
-(
-𝑛
-)
-O(n).
+### 3. Ejercicio de Programación
+* **Problema:** Modifica `token_list_append` para mantener un puntero al último elemento (`tail`), logrando inserciones con complejidad $O(1)$ en lugar de $O(n)$.
+* **Validación en Linux:** Compila con banderas de depuración y verifica la ausencia de fugas de memoria ejecutando:
+  ```bash
+  gcc -Wall -Wextra -g token_list.c -o token_list
+  valgrind --leak-check=full ./token_list
+  ```
 
-Validación en Linux: Compila con banderas de depuración y verifica la ausencia de fugas de memoria ejecutando:
+---
 
-Bash
-gcc -Wall -Wextra -g token_list.c -o token_list
-valgrind --leak-check=full ./token_list
-Lección 2: Listas Heterogéneas y Árboles Sintácticos (Nivel Intermedio)
-1. Concepto: Listas en el Análisis Sintáctico (AST)
+## Lección 2: Listas Heterogéneas y Árboles Sintácticos (Nivel Intermedio)
+
+### 1. Concepto: Listas en el Análisis Sintáctico (AST)
 Durante el análisis sintáctico (usualmente con Yacc/Bison), una gramática frecuentemente produce listas de elementos:
+* Lista de declaraciones: `int a, b, c;`
+* Lista de sentencias: `{ stmt1; stmt2; ... }`
+* Lista de argumentos: `foo(x, y + 1, z)`
 
-Lista de declaraciones: int a, b, c;
+Para representar sentencias o expresiones heterogéneas, se utiliza un nodo base genérico o una estructura con una unión discriminada (*tagged union*).
 
-Lista de sentencias: { stmt1; stmt2; ... }
+### 2. Ejemplo Práctico: Lista Enlazada de Parámetros y Sentencias
 
-Lista de argumentos: foo(x, y + 1, z)
-
-Para representar sentencias o expresiones heterogéneas, se utiliza un nodo base genérico o una estructura con una unión discriminada (tagged union).
-
-2. Ejemplo Práctico: Lista Enlazada de Parámetros y Sentencias
-C
+```c
 /* ast_list.h */
 #ifndef AST_LIST_H
 #define AST_LIST_H
@@ -173,7 +166,9 @@ void param_list_free(ParamNode *head);
 void param_list_print(const ParamNode *head);
 
 #endif
-C
+```
+
+```c
 /* ast_list.c */
 #include "ast_list.h"
 
@@ -240,21 +235,25 @@ int main(void) {
     param_list_free(params);
     return 0;
 }
-## 3. Ejercicio de Programación
-Problema: Implementa una función de validación semántica int param_check_duplicates(const ParamNode *head) que recorra la lista y devuelva 1 si hay identificadores duplicados (ejemplo: (int x, float x)), o 0 si todos los nombres son únicos.
+```
 
-Lección 3: Tabla de Símbolos con Encadenamiento y Ámbitos (Nivel Avanzado)
-1. Concepto: Tablas de Símbolos Jerárquicas
-En el análisis semántico es obligatorio validar tipos, visibilidad y asignación de memoria (offsets). Para ello se usa una Tabla de Símbolos.
+### 3. Ejercicio de Programación
+* **Problema:** Implementa una función de validación semántica `int param_check_duplicates(const ParamNode *head)` que recorra la lista y devuelva `1` si hay identificadores duplicados (ejemplo: `(int x, float x)`), o `0` si todos los nombres son únicos.
+
+---
+
+## Lección 3: Tabla de Símbolos con Encadenamiento y Ámbitos (Nivel Avanzado)
+
+### 1. Concepto: Tablas de Símbolos Jerárquicas
+En el análisis semántico es obligatorio validar tipos, visibilidad y asignación de memoria (*offsets*). Para ello se usa una Tabla de Símbolos.
 
 Se implementa comúnmente con dos niveles de listas enlazadas:
+* **Encadenamiento interno (Hash Table Bucket List):** Maneja colisiones de nombres de variables dentro de un mismo ámbito.
+* **Encadenamiento de ámbitos (Scope Chain / Parent Pointer):** Permite anidar bloques de código `{ ... }`. Al buscar un símbolo, se busca en el ámbito local; si no se encuentra, se sigue el enlace al ámbito padre (*enclosing scope*).
 
-Encadenamiento interno (Hash Table Bucket List): Maneja colisiones de nombres de variables dentro de un mismo ámbito.
+### 2. Ejemplo Práctico: Tabla de Símbolos en C++
 
-Encadenamiento de ámbitos (Scope Chain / Parent Pointer): Permite anidar bloques de código { ... }. Al buscar un símbolo, se busca en el ámbito local; si no se encuentra, se sigue el enlace al ámbito padre (enclosing scope).
-
-2. Ejemplo Práctico: Tabla de Símbolos en C++
-C++
+```cpp
 // symbol_table.hpp
 #ifndef SYMBOL_TABLE_HPP
 #define SYMBOL_TABLE_HPP
@@ -336,7 +335,9 @@ public:
 };
 
 #endif
-C++
+```
+
+```cpp
 // main.cpp
 #include "symbol_table.hpp"
 
@@ -378,17 +379,20 @@ int main() {
 
     return 0;
 }
-3. Ejercicio de Programación
-Problema: En el análisis semántico de lenguajes como C, las variables declaradas dentro de un bloque ocultan las del bloque externo (shadowing).
+```
 
-Agrega al método insert una verificación que advierta si la variable local está haciendo shadowing sobre una variable existente en parent_scope.
+### 3. Ejercicio de Programación
+* **Problema:** En el análisis semántico de lenguajes como C, las variables declaradas dentro de un bloque ocultan las del bloque externo (*shadowing*).
+  * Agrega al método `insert` una verificación que advierta si la variable local está haciendo *shadowing* sobre una variable existente en `parent_scope`.
+  * Implementa una función `void print_scope_hierarchy(std::shared_ptr<Scope> current)` que imprima todos los símbolos accesibles desde el punto actual hasta la raíz global.
 
-Implementa una función void print_scope_hierarchy(std::shared_ptr<Scope> current) que imprima todos los símbolos accesibles desde el punto actual hasta la raíz global.
+---
 
-Integración con Flex y Bison (Patrón Canónico)
-Al conectar estas estructuras con flex y bison, las listas enlazadas suelen exponerse dentro de la unión semántica %union:
+## Integración con Flex y Bison (Patrón Canónico)
 
-Fragmento de código
+Al conectar estas estructuras con flex y bison, las listas enlazadas suelen exponerse dentro de la unión semántica `%union`:
+
+```bison
 %union {
     int ival;
     char *sval;
@@ -405,4 +409,6 @@ param_list:
       param_list ',' param { $$ = param_append($1, $3); } \vert{} param                {$$ = $1; } ;  param: IDENTIFIER { $$ = param_create($1, TYPE_INT); free($1); }
     ;
 %%
+```
+
 Esta técnica mantiene el código del analizador limpio, desacoplado y listo para la fase de generación de código intermedio (código de 3 direcciones / cuádruplos).
