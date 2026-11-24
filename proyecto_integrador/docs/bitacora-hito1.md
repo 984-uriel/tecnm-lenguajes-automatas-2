@@ -25,6 +25,18 @@ Para cada revisión, registrar nombre, fecha, archivo o función revisada, expli
 
 Estado al preparar el paquete: revisión humana y aportaciones individuales pendientes de documentar.
 
+### Registro de Ingrid Paola Dzul Segovia — 2026-11-09
+
+- **Archivo revisado:** `src/lexer.c` (funciones `lexear`, `tokens_imprimir` y clasificación de categorías).
+- **Explicación propia:** el lexer recorre el fuente manteniendo `linea` y `columna`, agrupa identificadores y números, clasifica como `KW` solo cuando la longitud del lexema coincide exactamente con `int`/`if`/`else`/`while`/`print`, salta comentarios `//`, emite `S01` para caracteres inválidos y agrega el `EOF` una única vez al final.
+- **Decisión:** aceptar la propuesta de IA sin correcciones al código.
+- **Motivo:** la ejecución real confirmó cada comportamiento; no encontré nada que corregir. Única observación anotada: en modo `--tokens` un error léxico interrumpe la impresión de los tokens, decisión que corresponde a `compilador.c` y no afecta el Hito 1.
+- **Cambio realizado:** ninguna modificación a `src/` ni a `tests/`; se agregó el caso `prefijo_kw.{lj,tokens}` en `pruebas/hito1/` con su registro en `pruebas/run_hito1.py` (suite propia en 11/11) y se actualizó la documentación con este registro.
+- **Comandos ejecutados:** `gcc -std=c11 -Wall -Wextra -Werror -O2 -o lenguajito.exe src\*.c`; `.\verificar-hito1-windows.ps1`; `.\lenguajito.exe tests\hito1\01_expresion.lj --tokens`; `.\lenguajito.exe pruebas\hito1\tokens.lj --tokens`; dos casos límite propios con `intx`/`impar` y con `!` aislado; `python pruebas\run_hito1.py` → 11/11 con `prefijo_kw`.
+- **Resultado:** compilación sin warnings; 4/4 pruebas oficiales y 8/8 propias; salida `--tokens` idéntica a `pruebas/hito1/tokens.tokens`; `intx` e `impar` clasificados como `ID`; `S01` reportado en la columna exacta del carácter inválido; nuevo caso `prefijo_kw` en verde (los cinco prefijos de palabras reservadas → `ID`, `int` exacto → `KW`).
+- **Commit real:** `f3271b8464ad5a7233ec185a3496a69ec45e8472` (registro de este aparte) y `3a4eac95a7391625a25c7dac821a071f22628e8f` (caso de prueba `prefijo_kw` en `pruebas/hito1/`).
+- **Rechazos:** ninguno. No se rechazó ninguna propuesta de IA porque la verificación empírica coincidió con lo propuesto; no se inventan rechazos.
+
 
 ## Auditoría técnica de la integración
 

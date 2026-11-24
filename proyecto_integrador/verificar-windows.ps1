@@ -32,7 +32,8 @@ try {
     }
     foreach ($file in Get-ChildItem tests\validos\*.lj) {
         $r = Ejecutar $file.FullName '--run'
-        $expected = [IO.File]::ReadAllText(($file.FullName -replace '\.lj$', '.out'))
+        # Los .out se descargan con CRLF (autocrlf); normaliza como la salida.
+        $expected = [IO.File]::ReadAllText(($file.FullName -replace '\.lj$', '.out')).Replace("`r`n", "`n")
         if ($r.Codigo -ne 0 -or $r.Salida -cne $expected) { throw "Ejecucion incorrecta: $file : $($r.Salida) $($r.Error)" }
         $total++
     }

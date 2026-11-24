@@ -15,6 +15,7 @@ def main():
         return 1
     cases = [
         ("tokens", "--tokens", 0, "tokens.tokens"),
+        ("prefijo_kw", "--tokens", 0, "prefijo_kw.tokens"),
         ("valido", "--check", 0, ""),
         ("no_declarada", "--check", 1, (1, 9, "E01")),
         ("sin_valor", "--check", 1, (2, 9, "E01")),
@@ -22,6 +23,8 @@ def main():
         ("sin_punto_coma", "--check", 1, (2, 1, "S01")),
         ("asociatividad", "--ast", 0, "asociatividad.ast"),
         ("parentesis", "--ast", 0, "parentesis.ast"),
+        ("unario", "--ast", 0, "unario.ast"),
+        ("comparacion", "--ast", 0, "comparacion.ast"),
     ]
     failures = 0
     for name, mode, code, expected in cases:

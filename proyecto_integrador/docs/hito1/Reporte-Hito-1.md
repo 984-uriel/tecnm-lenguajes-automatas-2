@@ -20,7 +20,7 @@ Josue Efrain Martin Pool
 
 Este reporte describe la preparación de la primera entrega del compilador Lenguajito. El alcance comprende lectura de archivos, reconocimiento de tokens, análisis sintáctico descendente recursivo, construcción e impresión del AST y comprobaciones básicas mediante S01 y E01. El código está escrito en C11 y conserva la organización modular del proyecto.
 
-La ejecución específica del Hito 1 en PowerShell superó cuatro pruebas oficiales y ocho propias. Ocho capturas reales documentan la verificación, los tokens, los tres AST, la aceptación de un programa válido y los errores S01/E01. Los casos inválidos finalizaron con código 1 y el programa válido con código 0, tal como establece el contrato. La prueba oficial `make test-hito1` también superó sus cuatro casos en Linux mediante GitHub Codespaces. La figura 9 conserva esa evidencia. El tag `v0.1-hito1` ya está publicado sobre `3e09970377805c528cccd4936de765530bf96d00` y se conserva. La revisión personal del equipo y la demo quedan pendientes de documentar.
+La ejecución específica del Hito 1 en PowerShell superó cuatro pruebas oficiales y ocho propias. Ocho capturas reales documentan la verificación, los tokens, los tres AST, la aceptación de un programa válido y los errores S01/E01. Los casos inválidos finalizaron con código 1 y el programa válido con código 0, tal como establece el contrato. La prueba oficial `make test-hito1` también superó sus cuatro casos en Linux mediante GitHub Codespaces. La figura 9 conserva esa evidencia. El tag `v0.1-hito1` ya está publicado sobre `3e09970377805c528cccd4936de765530bf96d00` y se conserva. Actualización 2026-11-09: la revisión personal de Ingrid sobre `src/lexer.c` quedó documentada y verificada en Windows (commits `f3271b8` y `e346f39`); la revisión de Josue y la demo siguen pendientes de documentar.
 
 ## Objetivo
 
@@ -276,7 +276,7 @@ Esta salida documenta la prueba oficial del curso en Linux. No se observan error
 ### Elementos pendientes de cierre
 
 - Usar el commit 069a723b7523d2d6ea0be812f22d555e7c5aae42 como referencia de la integración comprobada; registrar después los commits de las aportaciones humanas.
-- Registrar la revisión y las aportaciones reales de los integrantes.
+- Registrar la revisión y las aportaciones reales de los integrantes. Ingrid: registrado el 2026-11-09 (commits `f3271b8` y `e346f39`). Jonathan: registrado en `56b2f77` y `b95b1cf`. Josue: pendiente.
 - Ensayar y realizar la demo de tres minutos.
 - Revisar el commit de entrega con el equipo. El tag `v0.1-hito1` existente se conserva; este reporte es un complemento documental posterior.
 

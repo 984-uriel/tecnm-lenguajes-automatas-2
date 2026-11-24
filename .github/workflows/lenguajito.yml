@@ -1,0 +1,41 @@
+name: Lenguajito C11 y ELF
+on:
+  push:
+    paths: ['proyecto_integrador/**', '.github/workflows/lenguajito.yml']
+  pull_request:
+    paths: ['proyecto_integrador/**', '.github/workflows/lenguajito.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: proyecto_integrador
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compilar y verificar todos los hitos
+        run: |
+          make clean
+          make
+          make test-hito1
+          make test-hito2
+          make test-hito3
+          make test-hito4
+          make test
+          make demo-bin
+          readelf -h build/anidado
+          bash practicar-linux.sh
+      - name: Verificar memoria y comportamiento indefinido
+        run: |
+          gcc -std=c11 -Wall -Wextra -Werror -g -fsanitize=address,undefined -fno-omit-frame-pointer -o lenguajito src/*.c
+          python3 tests/run.py
+          python3 pruebas/run.py
+      - name: Guardar binario y ensamblador de la demo
+        uses: actions/upload-artifact@v4
+        with:
+          name: lenguajito-demo-linux-x86-64
+          path: |
+            proyecto_integrador/build/anidado
+            proyecto_integrador/build/anidado.s

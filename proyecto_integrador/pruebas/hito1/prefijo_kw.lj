@@ -1,0 +1,7 @@
+intx = 1;
+int impar = 3;
+printer = 2;
+ifx = 4;
+elsevar = 5;
+whilex = 6;
+int int2 = 7;

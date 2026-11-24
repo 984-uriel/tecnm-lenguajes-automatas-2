@@ -60,4 +60,5 @@ void tac_imprimir(const Codigo *c);
 void tac_liberar(Codigo *c);
 void ensamblador(FILE *f, const Codigo *c, int nativo_windows);
 int ejecutar_binario(Contexto *ctx, const Codigo *c);
+int interpretar(Contexto *c, Nodo *raiz);
 #endif

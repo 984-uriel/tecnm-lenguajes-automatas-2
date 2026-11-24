@@ -22,12 +22,12 @@ Revisión técnica del 6 de noviembre de 2026.
 - [GitHub Actions aprobado](https://github.com/josue6martin/tecnm-lenguajes-automatas-2/actions/runs/42265588230).
 - [Tag publicado](https://github.com/josue6martin/tecnm-lenguajes-automatas-2/tree/v0.1-hito1).
 
-Los archivos `src/` y `tests/` no se modificaron al integrar el material del Hito 1. El reporte y los ocho casos propios se añadieron después del tag existente. Por ello, para consultar la documentación completa se debe usar `main`; el tag por sí solo no contiene el reporte nuevo. No se borró ni movió el tag.
+Los archivos `src/` y `tests/` no se modificaron al integrar el material del Hito 1. El reporte y los casos propios se añadieron después del tag existente. Por ello, para consultar la documentación completa se debe usar `main`; el tag por sí solo no contiene el reporte nuevo. No se borró ni movió el tag.
 
 ## Actividades que completa el equipo
 
 - [ ] Revisar el código y registrar decisiones personales reales en la bitácora.
-- [ ] Registrar aportaciones y commits individuales cuando existan.
+- [ ] Registrar aportaciones y commits individuales cuando existan. (Ingrid: `f3271b8`, `e346f39`, `dccc14a`, `5c0d0c6`, `3a4eac9`; Jonathan: `56b2f77`, `b95b1cf`; Josue: pendiente)
 - [ ] Confirmar los datos de identificación requeridos por el docente.
 - [ ] Ensayar y realizar la demo de tres minutos.
 - [ ] Entregar el enlace del repositorio y el reporte según el medio indicado por el profesor.

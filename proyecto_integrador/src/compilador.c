@@ -26,7 +26,13 @@ int compilar(const char *ruta, const char *modo) {
                 ir=generar_tac(raiz,&s,1);
                 if (!strcmp(modo,"--tac")) tac_imprimir(&ir);
                 else if (!strcmp(modo,"--asm")) ensamblador(stdout,&ir,0);
+#ifdef _WIN32
+                /* El toolchain local es de 64 bits y el backend nativo genera
+                 * ensamblador de 32; en Windows --run interpreta el AST. */
+                else resultado=interpretar(&c,raiz);
+#else
                 else resultado=ejecutar_binario(&c,&ir);
+#endif
             }
         }
     }
